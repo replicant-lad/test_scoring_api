@@ -1,5 +1,6 @@
 import json
 from flask import Flask, jsonify, request
+from jsonschema import validate, ValidationError
 
 app = Flask(__name__)
 
@@ -7,7 +8,11 @@ app = Flask(__name__)
 def score_submission():
     try:
         # Verify the incoming submission meets requirements.
-        data = request.get_json(force=True, silent=False)
+        data = request.get_json(force=True, silent=True)
+
+        if data is None:
+            return error_response("invalid_request", "The request is not valid JSON", 400)
+
         error = verify_submission(data)
         if error:
             return error
@@ -80,24 +85,26 @@ def score_submission():
 
         # Quick note, jsonify doesn't guarantee an order when serializing so there's good odds it will return the overall Criteria scores first.
         # Could work around this using an OrderedDict, but ultimately the order of the json shouldn't be relevant.
-        
+
         return jsonify(response_body)
 
     except Exception as e:
         return error_response("internal_error", str(e), 500)
 
+def load_schema(schema_path="./schema.json"):
+    with open(schema_path, "r") as schema_file:
+        return json.load(schema_file)
+
 def verify_submission(data):
     try:
-        if not isinstance(data, dict):
-            return error_response("invalid_request", "Submission data must be a JSON object", 400)
         
-        if "submission" not in data:
-            return error_response("invalid_request", "Submission data must contain a 'submission' key", 400)
-        
-        return None  # Return None if all checks pass
-    
-    except ValueError:
-        return error_response("invalid_request", "The request body is not valid JSON", 400)
+        expected_schema = load_schema()
+
+        validate(instance=data, schema=expected_schema)
+        return None
+
+    except ValidationError as e:
+        return error_response("invalid_request", f"Invalid data structure: {e.message}", 400)
 
 def error_response(error_code, error_message, status_code):
     return jsonify({"error": {"code": error_code, "message": error_message}}), status_code

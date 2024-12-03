@@ -1,0 +1,44 @@
+{
+    "type": "object",
+    "properties": {
+      "submission": {
+        "type": "object",
+        "properties": {
+          "targetLanguage": { "type": "string" },
+          "responses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "questionText": { "type": "string" },
+                "responseText": { "type": "string" },
+                "criteria": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" }
+                    },
+                    "required": ["name"]
+                  }
+                }
+              },
+              "required": ["questionText", "responseText", "criteria"]
+            }
+          },
+          "overallCriteria": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" }
+              },
+              "required": ["name"]
+            }
+          }
+        },
+        "required": ["targetLanguage", "responses", "overallCriteria"]
+      }
+    },
+    "required": ["submission"]
+  }
