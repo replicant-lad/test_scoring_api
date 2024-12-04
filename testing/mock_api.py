@@ -22,12 +22,12 @@ def score_submission():
         mock_rubric = {
             "testAnswers": [
                 {
-                    "questionName": "French1",
+                    "questionName": "Question1",
                     "questionText": "Translate: Ceci n'est pas une pipe",
                     "questionAnswer": "This is not a pipe."
                 },
                 {
-                    "questionName": "French2",
+                    "questionName": "Question2",
                     "questionText": "Translate: This is a test example.",
                     "questionAnswer": "Ceci est un exemple de test."
                 }
