@@ -91,7 +91,7 @@ def score_submission():
     except Exception as e:
         return error_response("internal_error", str(e), 500)
 
-def load_schema(schema_path="./schema.json"):
+def load_schema(schema_path="./testing/schema.json"):
     with open(schema_path, "r") as schema_file:
         return json.load(schema_file)
 
