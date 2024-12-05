@@ -137,6 +137,9 @@ print(json.dumps(response, indent=4))
 """
 Considerations:
 
+    Payload: In zero-circumstances would the payload be built out line by line in the code like I've shown - with the assumption that
+        user-input is performed on a webapp, accepting the payload as a json from the webapp itself is probably the way to go.
+
     Criteria Changing: The handling of criteria (especially the language) is clunky. Adding more helper methods for updating/removing criteria is
         an obvious next step.
 
