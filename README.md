@@ -1,5 +1,9 @@
 # Foreign Language Writing Test Scoring API
 
+## Intro text
+This is a code example for creating a wrapper around the API specified below. Comments and considerations have been included in the code itself.
+---
+
 ## Overview
 This API provides an endpoint for scoring foreign language writing tests. Each request contains a single test submission with its questions, responses, and scoring criteria.
 
